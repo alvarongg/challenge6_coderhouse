@@ -9,11 +9,12 @@ const enviarMensaje = () => {
 }
 
 const crearEtiquetasMensaje = (mensaje) => {
-  const { author, text } = mensaje;
+  const { author, text, date } = mensaje;
   return `
-    <div>
-      <strong>${author}</strong>
-      <em>${text}</em>
+    <div class="message">
+      <strong  class="badge badge-pill badge-primary email">${author}</strong>
+      <em class="date">${date}</em>
+      <em class="msj">${text}</em>
     </div>
   `;
 }
@@ -37,7 +38,7 @@ const crearEtiquetasProductos= (producto) => {
   const { id, title, price,thumbnail } = producto;
   return `
   <tr>
-  <td>${id}</td>  
+  <th scope="row">${id}</td>  
   <td>${title}</td>
   <td>${price}</td>
   <td>${thumbnail}</td>
@@ -46,15 +47,16 @@ const crearEtiquetasProductos= (producto) => {
 }
 
 const agregarProductos = (productos) => {
-  const headtable = `<table border="1">
-  <caption></caption>
-  <tbody>
-        <tr>
-  <th>Id</th>
-  <th>Title</th>
-  <th>Price</th>
-  <th>Thumbnail</th>
-    </tr>`
+  const headtable = `<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Title</th>
+    <th scope="col">Price</th>
+    <th scope="col">Thumbnail</th>
+  </tr>
+</thead>
+  <tbody>`
   const foottable = `</tbody>
   </table>`
   console.log('pepe')

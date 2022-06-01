@@ -3,13 +3,9 @@ const {productRouter,getAllProd,saveProd }= require("./productRouter.js");
 const { engine } = require("express-handlebars");
 const { Server: HttpServer } = require('http');
 const { Server: SocketServer } = require('socket.io');
+const moment = require('moment'); 
 const path = require('path');
 const app = express();
-
-
-// let Contenedor = require("./contenedor.js");
-// let productos = new Contenedor();
-
 
 
 let views_path = path.join(__dirname, '..', 'views');
@@ -52,13 +48,15 @@ socketServer.on('connection', (socket) => {
 
   socket.on('new_product', (producto) => {
     //inserta el producto que le llego 
-    console.log(`save prod: ${producto}`);
+    console.log(`saved prod: ${producto}`);
     saveProd(producto);
     socketServer.sockets.emit('products', getAllProd());
+  
   });
 
   socket.on('new_message', (mensaje) => {
-    console.log(mensaje);
+    const fechaActual = moment();
+    mensaje.date = fechaActual.format("DD/MM/YYYY HH:MM:SS");
     messages.push(mensaje);
     socketServer.sockets.emit('messages', messages);
   });
