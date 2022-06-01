@@ -25,7 +25,7 @@ npm run start
 * GET http://localhost8080/api/productos 
 * GET http://localhost8080/api/productos/:id
 * POST http://localhost8080/api/productos
-* PUT http://localhost8080/api/productos
+* PUT http://localhost8080/api/productos/:id
 * DELETE http://localhost8080/api/productos/:id
 
 ## Construido con 🛠️
