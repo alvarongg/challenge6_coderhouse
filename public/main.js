@@ -57,13 +57,13 @@ const agregarProductos = (productos) => {
     </tr>`
   const foottable = `</tbody>
   </table>`
-  
+  console.log('pepe')
+  console.log(productos);
   const productos2 = productos.map(producto => crearEtiquetasProductos(producto)).join(" ");
   const productosFinal = headtable.concat(productos2,foottable);
-  console.log(productosFinal);
+  console.log('html:'+productosFinal);
   document.getElementById("products").innerHTML = productosFinal;
 }
-
 
 
 socket.on('messages', (messages) => agregarMensajes(messages));

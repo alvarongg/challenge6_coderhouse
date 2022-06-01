@@ -1,20 +1,16 @@
 const express = require("express");
-const productRouter = require("./productRouter.js");
+const {productRouter,getAllProd,saveProd }= require("./productRouter.js");
 const { engine } = require("express-handlebars");
 const { Server: HttpServer } = require('http');
 const { Server: SocketServer } = require('socket.io');
 const path = require('path');
 const app = express();
 
-let Contenedor = require("./contenedor.js");
-let productos = new Contenedor();
+
+// let Contenedor = require("./contenedor.js");
+// let productos = new Contenedor();
 
 
-///pruebassss
-
-console.log(productos);
-
-/////pruebas ss
 
 let views_path = path.join(__dirname, '..', 'views');
 app.use(express.static('public'));
@@ -52,13 +48,13 @@ socketServer.on('connection', (socket) => {
 
   //emite los mensajes y productos actuales
   socket.emit('messages', messages);
-  socket.emit('products',productos.getAll()); // llamar a ruta get /api/productos
+  socket.emit('products',getAllProd());
 
   socket.on('new_product', (producto) => {
     //inserta el producto que le llego 
-    console.log(producto);
-    productos.save(producto);
-    socketServer.sockets.emit('products', productos.getAll());// llamar a ruta get /api/productos
+    console.log(`save prod: ${producto}`);
+    saveProd(producto);
+    socketServer.sockets.emit('products', getAllProd());
   });
 
   socket.on('new_message', (mensaje) => {
