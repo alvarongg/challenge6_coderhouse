@@ -8,8 +8,6 @@ Cuando un cliente se conecte, recibirá la lista de productos a representar en l
 
 ## Despliegue 📦
 
-> Cada proyecto esta configurado para ejecutarse en un puerto distinto lo que nos permite es tener corriendo los 3 a la vez 8080=hbs 8081=pug 8082=ejs
-
 * Instalacion de depedencias
 ```bash
 npm i 
