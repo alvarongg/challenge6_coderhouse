@@ -23,4 +23,49 @@ const agregarMensajes = (mensajes) => {
   document.getElementById("messages").innerHTML = mensajesFinal;
 }
 
+
+const enviarProducto = () => {
+  const title = document.getElementById("title").value;
+  const price = document.getElementById("price").value;
+  const thumbnail = document.getElementById("thumbnail").value;
+  const producto = { title, price , thumbnail };
+  alert(producto);
+  socket.emit('new_product', producto);
+  return false;
+}
+
+const crearEtiquetasProductos= (producto) => {
+  const { id, title, price,thumbnail } = producto;
+  return `
+  <tr>
+  <td>${id}</td>  
+  <td>${title}</td>
+  <td>${price}</td>
+  <td>${thumbnail}</td>
+  </tr>
+  `;
+}
+
+const agregarProductos = (productos) => {
+  const headtable = `<table border="1">
+  <caption></caption>
+  <tbody>
+        <tr>
+  <th>Id</th>
+  <th>Title</th>
+  <th>Price</th>
+  <th>Thumbnail</th>
+    </tr>`
+  const foottable = `</tbody>
+  </table>`
+  
+  const productos = productos.map(producto => crearEtiquetasProductos(producto)).join(" ");
+  const productosFinal = headtable+productos+foottable;
+  document.getElementById("products").innerHTML = productosFinal;
+}
+
+
+
 socket.on('messages', (messages) => agregarMensajes(messages));
+
+socket.on('products', (products) => agregarProductos(products));

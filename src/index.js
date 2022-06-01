@@ -1,10 +1,25 @@
 const express = require("express");
 const productRouter = require("./productRouter.js");
 const { engine } = require("express-handlebars");
+const { Server: HttpServer } = require('http');
+const { Server: SocketServer } = require('socket.io');
 const path = require('path');
 const app = express();
 
+let Contenedor = require("./contenedor.js");
+let productos = new Contenedor();
+
+
+///pruebassss
+
+console.log(productos);
+
+/////pruebas ss
+
 let views_path = path.join(__dirname, '..', 'views');
+app.use(express.static('public'));
+
+const messages = [];
 
 app.engine(
   'hbs',
@@ -17,13 +32,43 @@ app.engine(
 app.set('views', views_path);
 app.set('view engine', 'hbs');
 
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 app.use("/api/productos", productRouter);
 
-app.listen(8080, () => {
-  console.log("Estoy escuchando 8080 --engine handlebars");
+app.get('/', (req, res) => {
+    res.render('main');
+  });
+
+// app.listen(8080, () => {
+//   console.log("Estoy escuchando 8080 --engine handlebars");
+// });
+
+const httpServer = new HttpServer(app);
+const socketServer = new SocketServer(httpServer);
+
+socketServer.on('connection', (socket) => {
+
+  //emite los mensajes y productos actuales
+  socket.emit('messages', messages);
+  socket.emit('products',productos.getAll()); // llamar a ruta get /api/productos
+
+  socket.on('new_product', (producto) => {
+    //inserta el producto que le llego 
+    console.log(producto);
+    productos.save(producto);
+    socketServer.sockets.emit('products', productos.getAll());// llamar a ruta get /api/productos
+  });
+
+  socket.on('new_message', (mensaje) => {
+    console.log(mensaje);
+    messages.push(mensaje);
+    socketServer.sockets.emit('messages', messages);
+  });
+  
+});
+
+httpServer.listen(8080, () => {
+  console.log('Estoy escuchando en el puerto 8080');
 });

@@ -5,19 +5,20 @@ console.log("Router Productos cargados");
 let Contenedor = require("./contenedor.js");
 let productos = new Contenedor();
 
+
 productRouter.use(express.json());
 productRouter.use(express.urlencoded({ extended: true }));
 
-productRouter.get('/formulario', (req, res) => {
-  res.render('main');
-});
+// productRouter.get('/formulario', (req, res) => {
+//   res.render('main');
+// });
 
-productRouter.get('/tabla', async (req, res) => {
-   let array = productos.getAll();
+// productRouter.get('/tabla', async (req, res) => {
+//    let array = productos.getAll();
 
-  res.render('tabla',{array});
+//   res.render('tabla',{array});
       
-});
+// });
 
 //devuelve todos los productos
 productRouter.get("/", (req, res) => {
@@ -88,4 +89,4 @@ productRouter.delete("/:id", (req, res) => {
   }
 });
 
-module.exports = productRouter;
+module.exports = productRouter,productos;

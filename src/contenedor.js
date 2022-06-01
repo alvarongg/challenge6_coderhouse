@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 
 module.exports = class Contenedor {
   constructor() {
@@ -83,6 +82,7 @@ module.exports = class Contenedor {
    */
   getAll() {
     try {
+      console.log(this.container);
       return this.container;
     } catch (error) {
       throw error;
@@ -111,3 +111,6 @@ module.exports = class Contenedor {
     }
   }
 };
+
+
+
