@@ -29,7 +29,6 @@ const enviarProducto = () => {
   const price = document.getElementById("price").value;
   const thumbnail = document.getElementById("thumbnail").value;
   const producto = { title, price , thumbnail };
-  alert(producto);
   socket.emit('new_product', producto);
   return false;
 }
@@ -59,8 +58,9 @@ const agregarProductos = (productos) => {
   const foottable = `</tbody>
   </table>`
   
-  const productos = productos.map(producto => crearEtiquetasProductos(producto)).join(" ");
-  const productosFinal = headtable+productos+foottable;
+  const productos2 = productos.map(producto => crearEtiquetasProductos(producto)).join(" ");
+  const productosFinal = headtable.concat(productos2,foottable);
+  console.log(productosFinal);
   document.getElementById("products").innerHTML = productosFinal;
 }
 
